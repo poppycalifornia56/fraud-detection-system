@@ -138,5 +138,4 @@ The system includes comprehensive logging and monitoring capabilities:
 This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## Acknowledgments
-- [List any libraries, papers, or resources that inspired or helped your project]
-- [Mention any collaborators or contributors]
+tbd
