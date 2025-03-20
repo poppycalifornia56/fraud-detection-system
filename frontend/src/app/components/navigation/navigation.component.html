@@ -1,0 +1,32 @@
+<mat-toolbar color="primary">
+  <span>Fraud Detection System</span>
+  <span class="spacer"></span>
+  <nav mat-tab-nav-bar>
+    <a
+      mat-tab-link
+      *ngFor="let link of navLinks"
+      [routerLink]="link.path"
+      routerLinkActive
+      #rla="routerLinkActive"
+      [active]="rla.isActive"
+    >
+      {{ link.label }}
+    </a>
+  </nav>
+</mat-toolbar>
+
+<!-- <p-toolbar>
+  <div class="flex justify-between items-center w-full">
+    <span class="text-xl font-bold">Fraud Detection System</span>
+    <nav class="flex gap-4">
+      <a
+        *ngFor="let link of navLinks"
+        [routerLink]="link.path"
+        routerLinkActive="bg-blue-100"
+        class="p-2 rounded hover:bg-blue-50"
+      >
+        {{ link.label }}
+      </a>
+    </nav>
+  </div>
+</p-toolbar> -->

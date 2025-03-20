@@ -1,0 +1,115 @@
+<div class="dashboard-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Fraud Detection Dashboard</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div *ngIf="loading">
+        <mat-spinner></mat-spinner>
+      </div>
+
+      <div *ngIf="!loading" class="dashboard-grid">
+        <div class="summary-cards">
+          <mat-card class="summary-card">
+            <mat-card-title>{{ transactions.length }}</mat-card-title>
+            <mat-card-subtitle>Total Transactions</mat-card-subtitle>
+          </mat-card>
+
+          <mat-card class="summary-card warning">
+            <mat-card-title>{{
+              getFlaggedTransactionsLength()
+            }}</mat-card-title>
+            <mat-card-subtitle>Flagged Transactions</mat-card-subtitle>
+          </mat-card>
+
+          <mat-card class="summary-card alert">
+            <mat-card-title>{{ alerts.length }}</mat-card-title>
+            <mat-card-subtitle>Active Alerts</mat-card-subtitle>
+          </mat-card>
+        </div>
+
+        <div class="chart-container">
+          <h3>Transaction Risk Distribution</h3>
+          <highcharts-chart
+            [Highcharts]="highcharts"
+            [options]="chartOptions"
+            style="width: 100%; height: 300px; display: block"
+          >
+          </highcharts-chart>
+        </div>
+
+        <div class="alerts-container">
+          <h3>Recent Alerts</h3>
+          <mat-list>
+            <mat-list-item
+              *ngFor="let alert of alerts.slice(0, 5)"
+              [ngClass]="'severity-' + alert.severity"
+            >
+              <mat-icon mat-list-icon>warning</mat-icon>
+              <div mat-line>Alert #{{ alert.id }}</div>
+              <div mat-line>{{ alert.description }}</div>
+              <div mat-line>Severity: {{ alert.severity }}/5</div>
+            </mat-list-item>
+          </mat-list>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<!-- <div class="p-4">
+  <p-card
+    header="Fraud Detection Dashboard"
+    subheader="Monitor and analyze transaction risks"
+  >
+    <div *ngIf="loading" class="flex justify-center items-center h-32">
+      <p-progressSpinner></p-progressSpinner>
+    </div>
+
+    <div *ngIf="!loading" class="grid gap-4">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <p-card class="text-center">
+          <h2 class="text-2xl font-bold">{{ transactions.length }}</h2>
+          <p class="text-gray-600">Total Transactions</p>
+        </p-card>
+
+        <p-card class="text-center bg-yellow-50">
+          <h2 class="text-2xl font-bold">
+            {{ getFlaggedTransactionsLength() }}
+          </h2>
+          <p class="text-gray-600">Flagged Transactions</p>
+        </p-card>
+
+        <p-card class="text-center bg-red-50">
+          <h2 class="text-2xl font-bold">{{ alerts.length }}</h2>
+          <p class="text-gray-600">Active Alerts</p>
+        </p-card>
+      </div>
+
+      <div class="mt-6">
+        <h3 class="text-xl font-semibold mb-4">
+          Transaction Risk Distribution
+        </h3>
+        <highcharts-chart
+          [Highcharts]="highcharts"
+          [options]="chartOptions"
+          class="w-full h-96"
+        ></highcharts-chart>
+      </div>
+
+      <div class="mt-6">
+        <h3 class="text-xl font-semibold mb-4">Recent Alerts</h3>
+        <p-table [value]="alerts.slice(0, 5)" [paginator]="false" [rows]="5">
+          <ng-template pTemplate="body" let-alert>
+            <tr [ngClass]="'severity-' + alert.severity">
+              <td>{{ alert.id }}</td>
+              <td>{{ alert.description }}</td>
+              <td>Severity: {{ alert.severity }}/5</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </p-card>
+</div> -->
