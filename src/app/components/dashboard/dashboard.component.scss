@@ -1,0 +1,38 @@
+.dashboard-container {
+    padding: 20px;
+  }
+  
+  .dashboard-grid {
+    display: grid;
+    gap: 20px;
+  }
+  
+  .summary-cards {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .summary-card {
+    flex: 1;
+    text-align: center;
+    &.warning {
+      background-color: #fff3cd;
+    }
+    &.alert {
+      background-color: #f8d7da;
+    }
+  }
+  
+  .chart-container {
+    margin-top: 20px;
+  }
+  
+  .alerts-container {
+    margin-top: 20px;
+  }
+  
+  .severity-1 { color: green; }
+  .severity-2 { color: yellow; }
+  .severity-3 { color: orange; }
+  .severity-4 { color: red; }
+  .severity-5 { color: darkred; }

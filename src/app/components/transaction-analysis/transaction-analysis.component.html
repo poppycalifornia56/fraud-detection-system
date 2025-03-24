@@ -1,0 +1,157 @@
+<div class="analysis-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Transaction Risk Analysis</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div *ngIf="loading">
+        <mat-spinner></mat-spinner>
+      </div>
+
+      <div *ngIf="!loading">
+        <h3>Department-Vendor Risk Heatmap</h3>
+        <p>
+          This heatmap shows average risk scores for transactions between
+          departments and vendors.
+        </p>
+        <highcharts-chart
+          [Highcharts]="highcharts"
+          [options]="heatmapOptions"
+          style="width: 100%; height: 600px; display: block"
+        >
+        </highcharts-chart>
+
+        <h3>High-Risk Transaction List</h3>
+        <table
+          mat-table
+          [dataSource]="getHighRiskTransactions()"
+          class="mat-elevation-z8"
+        >
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>ID</th>
+            <td mat-cell *matCellDef="let transaction">{{ transaction.id }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef>Date</th>
+            <td mat-cell *matCellDef="let transaction">
+              {{ transaction.transaction_date | date }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef>Amount</th>
+            <td mat-cell *matCellDef="let transaction">
+              {{ transaction.amount | currency }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="department">
+            <th mat-header-cell *matHeaderCellDef>Department</th>
+            <td mat-cell *matCellDef="let transaction">
+              {{ transaction.department_id }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="vendor">
+            <th mat-header-cell *matHeaderCellDef>Vendor</th>
+            <td mat-cell *matCellDef="let transaction">
+              {{ transaction.vendor_id }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="risk">
+            <th mat-header-cell *matHeaderCellDef>Risk Score</th>
+            <td
+              mat-cell
+              *matCellDef="let transaction"
+              [ngClass]="getRiskClass(transaction)"
+            >
+              {{ transaction.risk_score | percent : "1.0-2" }}
+            </td>
+          </ng-container>
+
+          <tr
+            mat-header-row
+            *matHeaderRowDef="[
+              'id',
+              'date',
+              'amount',
+              'department',
+              'vendor',
+              'risk'
+            ]"
+          ></tr>
+          <tr
+            mat-row
+            *matRowDef="
+              let row;
+              columns: ['id', 'date', 'amount', 'department', 'vendor', 'risk']
+            "
+          ></tr>
+        </table>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<!-- <div class="p-4">
+  <p-card
+    header="Transaction Risk Analysis"
+    subheader="Analyze high-risk transactions and trends"
+  >
+    <div *ngIf="loading" class="flex justify-center items-center h-32">
+      <p-progressSpinner></p-progressSpinner>
+    </div>
+
+    <div *ngIf="!loading" class="space-y-6">
+      <div>
+        <h3 class="text-xl font-semibold mb-4">
+          Department-Vendor Risk Heatmap
+        </h3>
+        <p class="text-gray-600 mb-4">
+          This heatmap shows average risk scores for transactions between
+          departments and vendors.
+        </p>
+        <highcharts-chart
+          [Highcharts]="highcharts"
+          [options]="heatmapOptions"
+          class="w-full h-96"
+        ></highcharts-chart>
+      </div>
+
+      <div>
+        <h3 class="text-xl font-semibold mb-4">High-Risk Transaction List</h3>
+        <p-table
+          [value]="getHighRiskTransactions()"
+          [paginator]="true"
+          [rows]="10"
+        >
+          <ng-template pTemplate="header">
+            <tr>
+              <th>ID</th>
+              <th>Date</th>
+              <th>Amount</th>
+              <th>Department</th>
+              <th>Vendor</th>
+              <th>Risk Score</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-transaction>
+            <tr>
+              <td>{{ transaction.id }}</td>
+              <td>{{ transaction.transaction_date | date }}</td>
+              <td>{{ transaction.amount | currency }}</td>
+              <td>{{ transaction.department_id }}</td>
+              <td>{{ transaction.vendor_id }}</td>
+              <td [ngClass]="getRiskClass(transaction)">
+                {{ transaction.risk_score | percent : "1.0-2" }}
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </p-card>
+</div> -->

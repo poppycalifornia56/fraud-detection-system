@@ -1,0 +1,19 @@
+mat-toolbar {
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+  }
+  
+  .spacer {
+    flex: 1 1 auto;
+  }
+  
+  a {
+    text-decoration: none;
+    color: white;
+    margin: 0 10px;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
